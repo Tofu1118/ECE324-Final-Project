@@ -18,7 +18,7 @@ to convert a melspectrogram array into a spectrograph.
 
 **autoencoder.py** contains three autoencoder models and training procedures. **encode_audio.py** is a script that takes
 raw mp3 audio contained inside the **audio_input** folder, and outputs their autoencoder reconstructions in the **audio_output**
-folder. Audio outputs for the regular, deep, and shallow resnet models in previous runs are saved in **audio_output_regular**, **audio_output_deep**,
+folder. Audio outputs for the regular, deep, and shallow autoencoder models in previous runs are saved in **audio_output_regular**, **audio_output_deep**,
 and **audio_output_shallow** respectively.
 
 **result_visualizer.py** is a training script that runs the test data through classification models and visualize their 
