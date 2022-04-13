@@ -92,13 +92,15 @@ if __name__ == "__main__":
 
             y, sr = librosa.load(dir+folder+file, sr=44100)
             # the length of a 10 sec clip
-            length = sr*10
+            length = sr*20
             sample_num = 0
             total = len(y)//sr
+            if total < 20:
+                continue
 
             # take 15 samples from each piece
-            while sample_num < 30:
-                start = np.random.randint(total-10)
+            while sample_num < 15:
+                start = np.random.randint(total-20)
                 extract_arr = y[start*sr:start*sr+length:]
                 # preprocess
                 arr_f = get_feature_vector(extract_arr, sr)

@@ -34,16 +34,16 @@ if __name__ == "__main__":
     np.random.seed(45)
     test_index_list = np.arange(x1_test.shape[0])
     np.random.shuffle(test_index_list)
-    x1_test = x1_test[test_index_list[0:480]]
-    x2_test = x2_test[test_index_list[0:480]]
-    y_test = y_test[test_index_list[0:480]]
+    x1_test = x1_test[test_index_list]
+    x2_test = x2_test[test_index_list]
+    y_test = y_test[test_index_list]
 
     x1_test = torch.from_numpy(x1_test).unsqueeze(1).float()
     x2_test = torch.from_numpy(x2_test).unsqueeze(1).float()
     y_test = torch.tensor(y_test).type(torch.LongTensor)
 
-    model = ensemble_resnet.Ensemble_Resnet()
-    model.load_state_dict(torch.load('ensemble_resnet_weights.pth'))
+    model = ensemble_cnn.CNN_Ensemble()
+    model.load_state_dict(torch.load('ensemble_cnn_weights.pth'))
 
     y_test_pred = model(x1_test, x2_test)
     y_test_pred = y_test_pred.argmax(axis=1)

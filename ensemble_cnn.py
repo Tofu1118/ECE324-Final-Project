@@ -15,7 +15,7 @@ class CNN_Ensemble(nn.Module):
 
         # spectrogram CNN
         self.network1 = torch.nn.Sequential(
-            nn.Conv2d(in_channels=1, out_channels=3, kernel_size=3, padding='same'),
+            nn.Conv2d(in_channels=1, out_channels=3, kernel_size=5, padding='same'),
             nn.MaxPool2d(kernel_size=2, stride=2),
             nn.BatchNorm2d(num_features=3),
             nn.ReLU(),
@@ -34,7 +34,7 @@ class CNN_Ensemble(nn.Module):
 
         # feature CNN
         self.network2 = torch.nn.Sequential(
-            nn.Conv2d(in_channels=1, out_channels=3, kernel_size=3, padding='same'),
+            nn.Conv2d(in_channels=1, out_channels=3, kernel_size=5, padding='same'),
             nn.MaxPool2d(kernel_size=2, stride=2),
             nn.BatchNorm2d(num_features=3),
             nn.ReLU(),
@@ -52,8 +52,8 @@ class CNN_Ensemble(nn.Module):
             nn.ReLU())
 
         # combined
-        self.linear1 = torch.nn.Sequential(nn.Linear(424, 16), nn.ReLU())
-        self.linear2 = torch.nn.Sequential(nn.Linear(1272, 16), nn.ReLU())
+        self.linear1 = torch.nn.Sequential(nn.Linear(856, 16), nn.ReLU())
+        self.linear2 = torch.nn.Sequential(nn.Linear(2568, 16), nn.ReLU())
         self.final = nn.Linear(32, 8)
 
     def forward(self, x1, x2):
@@ -96,9 +96,9 @@ if __name__ == "__main__":
     y_val = torch.tensor(y_val).type(torch.LongTensor)
 
     # define parameters
-    epochs = 20
+    epochs = 50
     lr = 0.001
-    batch = 64
+    batch = 256
 
     # Initialize model
     model = CNN_Ensemble()

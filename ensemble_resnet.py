@@ -33,7 +33,7 @@ class Ensemble_Resnet(nn.Module):
             nn.ReLU())
 
         # combined
-        self.linear = nn.Linear(6136, 8)
+        self.linear = nn.Linear(11320, 8)
 
     def forward(self, x1, x2):
         #one = self.network1.conv1(self.network1(x1))
@@ -76,7 +76,7 @@ if __name__ == "__main__":
     # define parameters
     epochs = 20
     lr = 0.0001
-    batch = 200
+    batch = 256
     # Initialize model
     model = Ensemble_Resnet()
 
@@ -85,6 +85,8 @@ if __name__ == "__main__":
     optimizer = torch.optim.Adam(model.parameters(), lr, weight_decay = 0.001)
     train_index_list = np.arange(x1_train.shape[0])
 
+    train_accuracy_list = np.zeros(20)
+    val_accuracy_list = np.zeros(20)
     # Training
     for epoch in range(epochs):
         start = 0
@@ -118,7 +120,19 @@ if __name__ == "__main__":
             y_pred_val = model(curr_x1_val, curr_x2_val)
             val_accuracy += (y_pred_val.argmax(axis=1) == curr_y_val).sum()
 
+        train_accuracy_list[epoch] = (accuracy.item()/len(x1_train))
+        val_accuracy_list[epoch] = (val_accuracy.item()/len(x1_val))
         print('epoch:', epoch + 1,  'training accuracy =', accuracy, ' ', accuracy / len(x1_train))
         print('validation accuracy =', val_accuracy, ' ', val_accuracy/len(x1_val))
 
     torch.save(model.state_dict(), 'ensemble_resnet_weights.pth')
+    np.save("resnet_train", train_accuracy_list)
+    np.save("resnet_val", val_accuracy_list)
+
+    '''plt.title("Model 2 Training and Validation Accuracy over Epochs")
+    plt.plot(train_accuracy_list)
+    plt.plot(val_accuracy_list)
+    plt.xlabel("Epoch")
+    plt.ylabel("Accuracy")
+    plt.savefig("Resnet_Accuracy.pdf")
+    plt.show()'''
