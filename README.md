@@ -16,6 +16,8 @@ to convert a melspectrogram array into a spectrograph.
 
 **ensemble_resnet.py** contains the cnn + resnet model and its training procedures.
 
+**result_visualizer.py** plots the training and validation accuracy over training epochs. The plots can be found in **Ensemble_CNN_Accuracy.pdf** and **Ensemble_Resnet_Accuracy.pdf**.
+
 **autoencoder.py** contains three autoencoder models and training procedures. **encode_audio.py** is a script that takes
 raw mp3 audio contained inside the **audio_input** folder, and outputs their autoencoder reconstructions in the **audio_output**
 folder. Audio outputs for the regular, deep, and shallow autoencoder models in previous runs are saved in **audio_output_regular**, **audio_output_deep**,
